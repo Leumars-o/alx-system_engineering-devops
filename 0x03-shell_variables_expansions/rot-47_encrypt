@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# Function to perform ROT-47 encryption/decryption
+
+rot47() {
+    local input=$1
+    local output=""
+
+    for ((i = 0; i < ${#input}; i++)); do
+
+        ascii_val=$(printf '%d' "'${input:i:1}")
+        if ((ascii_val >= 33 && ascii_val <= 126)); then
+            ascii_val=$(((ascii_val - 33 + 47) % 94 + 33))
+        fi
+        output+="$(printf "\\$(printf '%03o' "$ascii_val")")"
+    done
+
+    echo "$output"
+}
+
+# Check if an output file is provided
+if [[ -z $1 ]]; then
+    echo "Please provide an output file."
+    exit 1
+fi
+
+output_file=$1
+
+# Read plain text from stdin
+text=$(cat)
+
+# Perform ROT-47 encryption/decryption
+encrypted_text=$(rot47 "$text")
+
+# Write result to the output file
+echo "$encrypted_text" > "$output_file"
