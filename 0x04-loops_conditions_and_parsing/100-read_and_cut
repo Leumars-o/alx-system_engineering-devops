@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# a bash script that Reads a file
+
+input="/etc/passwd"
+while IFS= read -r line; do
+	echo "$line" | cut -f1,3,6 -d':'
+done < $input
