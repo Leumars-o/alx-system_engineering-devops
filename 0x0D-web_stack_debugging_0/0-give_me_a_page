@@ -1,5 +1,3 @@
 #!/usr/bin/env bash
-# a bash script that runs an apache server
 
-service apache2 restart
-echo 'Hello Holberton' > /var/www/html/index.html
+docker run -p 8080:80 -d -it holbertonschool/265-0
