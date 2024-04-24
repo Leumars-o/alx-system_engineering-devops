@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# a bash script that runs an apache server
+
+sudo service apache2 start
+echo 'Hello Holberton' > /var/www/html/index.html
