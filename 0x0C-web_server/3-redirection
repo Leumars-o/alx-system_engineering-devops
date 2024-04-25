@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# This script configures a new ubuntu machine by:
+# Installing Nginx, setting it to listen to port 80
+# serve a page that returns 'Hello world'
+# sets up a redirection
+
+echo -e "Updating machine and installing Nginx...\n"
+sudo apt-get update -y -qq && \
+        sudo apt-get install nginx -y
+
+echo -e "Configuring Nginx...\n"
+# start Nginx service
+sudo service nginx start
+
+# allow nginx through firewall
+sudo ufw allow 'Nginx HTTP'
+
+# Give user ownership of /var/www/html
+sudo chown -R "$USER":"$USER" /var/www/html
+sudo chmod -R 755 /var/www
+
+# create a backup of default index
+cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bak
+
+# create new index
+echo -e "Hello World!" > /var/www/html/index.nginx-debian.html
+
+# setup redirect
+sudo sed -i '24i\       rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
+
+
+# Restart Nginx
+sudo service nginx restart
+
+echo -e "Done!\n"
