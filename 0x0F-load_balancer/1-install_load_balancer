@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # bash script to install and configure HAproxy on lb-01 server
 
-# install HAproxy
-# echo -e "Updating and installing HAproxy...\n"
-# sudo apt-get update -y -qq && \
-#     sudo apt-get install haproxy -y
+#install HAproxy
+echo -e "Updating and installing HAproxy...\n"
+sudo apt-get update -y -qq && \
+    sudo apt-get install haproxy -y
 
 # create a backup of HAproxy configuration file
-# sudo cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.backup
+sudo cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.backup
 
 # configure HAproxy to send traffric to web-01 and web-02 servers
 echo -e "Configuring HAproxy (Round Robin Algorithm) to send traffic to web-01 and web-02 servers...\n"
