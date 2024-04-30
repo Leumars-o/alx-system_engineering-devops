@@ -16,7 +16,7 @@ haproxy_confg=\
 frontend Leumars_frontend
     bind *:80  # Listen on port 80 of all interfaces
     mode http
-    default-backend Leumars_webservers  # Forward requests to webservers
+    default_backend Leumars_webservers  # Forward requests to webservers
 
   # Define backend servers
   backend Leumars_webservers
