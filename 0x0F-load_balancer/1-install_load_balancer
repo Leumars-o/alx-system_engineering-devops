@@ -3,8 +3,10 @@
 
 #install HAproxy
 echo -e "Updating and installing HAproxy...\n"
-sudo apt-get update -y -qq && \
-    sudo apt-get install haproxy -y
+apt-get install -y software-properties-common
+add-apt-repository -y ppa:vbernat/haproxy-1.8
+apt-get -y update
+apt-get install -y haproxy=1.8.\*
 
 # create a backup of HAproxy configuration file
 sudo cp /etc/haproxy/haproxy.cfg etc-haproxy-haproxy.cfg.backup
