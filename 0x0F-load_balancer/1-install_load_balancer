@@ -22,8 +22,8 @@ frontend Leumars_frontend
   backend Leumars_webservers
     balance roundrobin  # Use round-robin load balancing algorithm
 
-    server 495938-web-01   54.157.155.48:80
-    server 495938-web-02 	100.26.171.101:80
+    server web-01   54.157.155.48:80 check
+    server web-02 	100.26.171.101:80 check
 "
 
 #shellcheck disable=SC2154
