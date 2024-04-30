@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+# duplicates web-01 configuration to web-02
+# Configures a new ubuntu machine by installing
+# Nginx where it should be listening on port 80
+# Serve a page that would return a Hello World string
+#
+
+echo -e "Updating and installing Nginx.\n"
+sudo apt-get update -y -qq && \
+	 sudo apt-get install nginx -y
+
+echo -e "\nSetting up some minor stuff.\n"
+
+# starting nginx service
+sudo service nginx start
+
+# allowing nginx on firewall
+sudo ufw allow 'Nginx HTTP'
+
+# Give the user ownership to website files for easy editing
+sudo chown -R "$USER":"$USER" /var/www/html
+sudo chmod -R 755 /var/www
+
+# Backup default index
+cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
+
+# Creating new index
+echo -e "Hello World!" > /var/www/html/index.nginx-debian.html
+
+# Set up a 404 page
+echo "Ceci n'est pas une page" >> /var/www/html/error_404.html
+
+# backup default server config file
+sudo cp /etc/nginx/sites-enabled/default nginx-sites-enabled_default.backup
+
+# Creating new server config file
+#   - 301 permanent redirect to samuelcodes.tech
+#   - 404 error page for /error_404.html
+#   - custom header X-Served-By
+server_config=\
+"server {
+		listen 80 default_server;
+		listen [::]:80 default_server;
+		root /var/www/html;
+		index index.html index.htm index.nginx-debian.html
+		server_name _;
+		add_header X-Served-By \$hostname;
+		location / {
+			try_files \$uri \$uri/ =404;
+		}
+		rewrite ^/redirect_me http://samuelcodes.tech/ permanent;
+		error_page 404 /error_404.html;
+		location = /error_404.html {
+			internal;
+		}
+}"
+#shellcheck disable=SC2154
+echo "$server_config" | sudo tee /etc/nginx/sites-enabled/default
+
+# Restarting nginx
+if pgrep -x "nginx" >/dev/null; then
+    sudo service nginx restart
+else
+    sudo service nginx start
+fi
+
+echo -e "\nCompleted.\n"
