@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# a bash script that runs a command as a different user
+user=$1
+su - "$user" -c "whoami"
