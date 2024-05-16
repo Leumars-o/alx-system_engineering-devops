@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# a bash script that generates a mysql dump
+# and creates a compressed archive out of it
+
+if [ -z "$1" ]; then
+  echo "Please provide the Mysql root password as the first argument"
+  exit 1
+fi
+
+# the name of the database to dump
+backup_file="backup.sql"
+date_format=$(date +"%d-%m-%Y")
+comp_backup="$date_format-backup.tar.gz"
+
+# dump the database
+mysqldump -u root -p"$1" --all-databases > "$backup_file"
+
+# create a compressed archive
+tar -czf "$comp_backup" "$backup_file"
+
+# remove the dump file
+rm "$backup_file"
+
+echo "Backup created successfully"
+echo "Backup file: $comp_backup"
