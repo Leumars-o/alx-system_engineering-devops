@@ -13,10 +13,10 @@ date_format=$(date +"%d-%m-%Y")
 comp_backup="$date_format-backup.tar.gz"
 
 # dump the database
-mysqldump -u root -p"$1" --all-databases > "$backup_file"
+mysqldump -u root -p="$1" --all-databases > "$backup_file"
 
 # create a compressed archive
-tar -czf "$comp_backup" "$backup_file"
+tar -czvf "$comp_backup" "$backup_file"
 
 # remove the dump file
 rm "$backup_file"
