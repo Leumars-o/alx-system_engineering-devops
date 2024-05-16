@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# a bash script that runs a command as a different user
+user=$1
+
+# Check if the user already exists
+if ! id "$user" >/dev/null 2>&1; then
+    sudo useradd -m -s /bin/bash "$user"
+fi
+
+su - "$user" -c "whoami"
