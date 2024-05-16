@@ -18,8 +18,5 @@ mysqldump -u root --password="$1" --all-databases > "$backup_file"
 # create a compressed archive
 tar -czvf "$comp_backup" "$backup_file"
 
-# remove the dump file
-rm "$backup_file"
-
 echo "Backup created successfully"
 echo "Backup file: $comp_backup"
