@@ -2,9 +2,9 @@
 """Gather data from an API
 """
 
+import re
 import requests
 import sys
-import re
 
 REST_API = 'https://jsonplaceholder.typicode.com/'
 
