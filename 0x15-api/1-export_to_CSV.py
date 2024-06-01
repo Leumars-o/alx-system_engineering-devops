@@ -20,4 +20,3 @@ if __name__ == '__main__':
             title = task.get('title')
             writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
             writer.writerow([user, username, completed, title])
-
