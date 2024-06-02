@@ -24,7 +24,7 @@ if __name__ == '__main__':
             with open('{}.json'.format(id), 'w') as file:
                 for task in todos:
                     if task.get('userId') == id:
-                        json.dump({f"{id}": [{"task": task.get(
+                        json.dump({str(id): {"task": task.get(
                             'title'), "completed": task.get(
                                 'completed'), "username": user.get(
-                                    'username')}]}, file)
+                                    'username')}}, file)
